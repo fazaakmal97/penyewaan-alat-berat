@@ -1,0 +1,414 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-primary: #f59e0b;
+  --color-primary-foreground: #1c1917;
+  --color-background: #ffffff;
+  --color-foreground: #0f172a;
+  --color-muted: #f1f5f9;
+  --color-muted-foreground: #64748b;
+  --color-border: #e2e8f0;
+  --color-card: #ffffff;
+  --color-destructive: #ef4444;
+  --radius-lg: 0.75rem;
+}
+
+.dark {
+  --color-background: #060b14;
+  --color-foreground: #f1f5f9;
+  --color-muted: #111827;
+  --color-muted-foreground: #8b9cb5;
+  --color-border: #1e2d45;
+  --color-card: #0f1729;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-background text-foreground antialiased;
+}
+
+::selection {
+  background: rgba(245, 158, 11, 0.25);
+  color: inherit;
+}
+
+/* Premium CTA glow */
+.btn-glow {
+  box-shadow: 0 4px 20px -4px rgba(245, 158, 11, 0.45);
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.btn-glow:hover {
+  box-shadow: 0 8px 28px -4px rgba(245, 158, 11, 0.55);
+  transform: translateY(-1px);
+}
+
+/* Section accent line */
+.section-accent::before {
+  content: '';
+  display: block;
+  width: 3rem;
+  height: 3px;
+  margin-bottom: 1rem;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #f59e0b, #f97316);
+}
+
+/* Scroll hint bounce */
+@keyframes scroll-hint {
+  0%, 100% { transform: translateY(0); opacity: 0.6; }
+  50% { transform: translateY(6px); opacity: 1; }
+}
+
+.scroll-hint {
+  animation: scroll-hint 2s ease-in-out infinite;
+}
+
+/* Card shine on hover */
+.card-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-shine::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.08) 45%,
+    rgba(255, 255, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0.08) 55%,
+    transparent 60%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+  pointer-events: none;
+}
+
+.card-shine:hover::after {
+  transform: translateX(100%);
+}
+
+/* Nav active dot */
+.nav-pill-active {
+  position: relative;
+}
+
+.nav-pill-active::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: #f59e0b;
+  transform: translateX(-50%);
+}
+
+/* Customer portal — light mesh */
+.customer-mesh {
+  background-image:
+    radial-gradient(ellipse 70% 45% at 50% -15%, rgba(245, 158, 11, 0.06), transparent),
+    radial-gradient(ellipse 50% 35% at 100% 0%, rgba(249, 115, 22, 0.04), transparent);
+}
+
+/* Announcement shimmer */
+@keyframes announcement-shimmer {
+  0% { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+
+.announcement-bar {
+  background-image: linear-gradient(
+    90deg,
+    #f59e0b 0%,
+    #f97316 25%,
+    #fbbf24 50%,
+    #f97316 75%,
+    #f59e0b 100%
+  );
+  background-size: 200% auto;
+  animation: announcement-shimmer 8s linear infinite;
+}
+
+/* Subtle float for decorative elements */
+@keyframes gentle-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.gentle-float {
+  animation: gentle-float 5s ease-in-out infinite;
+}
+
+/* Hero slideshow */
+@keyframes hero-ken-burns {
+  from { transform: scale(1); }
+  to { transform: scale(1.07); }
+}
+
+.hero-ken-burns {
+  animation: hero-ken-burns 7s ease-out forwards;
+}
+
+@keyframes hero-content-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-content-enter {
+  animation: hero-content-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Customer portal — ambient dark mesh */
+.dark .customer-mesh {
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(245, 158, 11, 0.09), transparent),
+    radial-gradient(ellipse 60% 40% at 100% 50%, rgba(249, 115, 22, 0.05), transparent),
+    radial-gradient(ellipse 40% 30% at 0% 80%, rgba(245, 158, 11, 0.04), transparent);
+}
+
+/* Premium glass panel */
+.glass-panel {
+  border: 1px solid color-mix(in srgb, var(--color-border) 80%, transparent);
+  background: color-mix(in srgb, var(--color-card) 85%, transparent);
+  backdrop-filter: blur(12px);
+}
+
+.dark .glass-panel {
+  border-color: color-mix(in srgb, #f59e0b 12%, var(--color-border));
+  box-shadow: 0 4px 24px -4px rgba(245, 158, 11, 0.06);
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* Cetak laporan — sembunyikan sidebar & header admin */
+@media print {
+  body.printing-report aside,
+  body.printing-report header,
+  body.printing-report .no-print {
+    display: none !important;
+  }
+
+  body.printing-report main {
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  body.printing-report #report-print-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+}
+
+/* Cetak invoice customer */
+@media print {
+  body.printing-invoice .no-print,
+  body.printing-invoice header,
+  body.printing-invoice footer,
+  body.printing-invoice nav,
+  body.printing-invoice .announcement-bar {
+    display: none !important;
+  }
+
+  body.printing-invoice main {
+    padding: 0 !important;
+  }
+
+  body.printing-invoice .invoice-print {
+    color: #0f172a !important;
+    background: #fff !important;
+  }
+
+  body.printing-invoice #invoice-print-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+
+  body.printing-invoice #payment-proof-print-area,
+  body.printing-invoice .dialog-overlay,
+  body.printing-invoice .dialog-content {
+    display: none !important;
+  }
+}
+
+/* Cetak bukti pembayaran customer */
+@media print {
+  body.printing-payment-proof .no-print,
+  body.printing-payment-proof header,
+  body.printing-payment-proof footer,
+  body.printing-payment-proof nav,
+  body.printing-payment-proof .announcement-bar,
+  body.printing-payment-proof .dialog-overlay,
+  body.printing-payment-proof .dialog-content {
+    display: none !important;
+  }
+
+  body.printing-payment-proof main {
+    padding: 0 !important;
+  }
+
+  body.printing-payment-proof .payment-proof-print,
+  body.printing-payment-proof .invoice-print {
+    color: #0f172a !important;
+    background: #fff !important;
+  }
+
+  body.printing-payment-proof #payment-proof-print-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+
+  body.printing-payment-proof #invoice-print-area {
+    display: none !important;
+  }
+}
+
+/* Host cetak off-screen (riwayat detail) */
+.customer-print-host {
+  position: fixed;
+  left: -100vw;
+  top: 0;
+  width: 100%;
+  max-width: 800px;
+  pointer-events: none;
+  opacity: 0;
+  z-index: -1;
+}
+
+@media print {
+  body.printing-invoice .customer-print-host,
+  body.printing-payment-proof .customer-print-host {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 1;
+    z-index: auto;
+    pointer-events: auto;
+  }
+}
+
+/* Overlay */
+@keyframes dialog-overlay-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes dialog-overlay-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.dialog-overlay[data-state="open"] {
+  animation: dialog-overlay-in 350ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.dialog-overlay[data-state="closed"] {
+  animation: dialog-overlay-out 250ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Desktop — modal tengah (scale + fade) */
+@keyframes dialog-panel-in {
+  from {
+    opacity: 0;
+    transform: scale(0.97) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes dialog-panel-out {
+  from {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.98) translateY(4px);
+  }
+}
+
+/* Mobile — bottom sheet (geser dari bawah) */
+@keyframes dialog-sheet-in {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes dialog-sheet-out {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+
+@media (max-width: 639px) {
+  .dialog-content[data-state="open"] .dialog-panel {
+    animation: dialog-sheet-in 400ms cubic-bezier(0.32, 0.72, 0, 1) forwards;
+  }
+
+  .dialog-content[data-state="closed"] .dialog-panel {
+    animation: dialog-sheet-out 300ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+}
+
+@media (min-width: 640px) {
+  .dialog-content[data-state="open"] .dialog-panel {
+    animation: dialog-panel-in 420ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  .dialog-content[data-state="closed"] .dialog-panel {
+    animation: dialog-panel-out 280ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dialog-overlay[data-state="open"],
+  .dialog-overlay[data-state="closed"],
+  .dialog-content[data-state="open"] .dialog-panel,
+  .dialog-content[data-state="closed"] .dialog-panel {
+    animation: none;
+  }
+}

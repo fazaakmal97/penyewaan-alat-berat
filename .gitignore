@@ -1,0 +1,12 @@
+node_modules/
+vendor/
+.env
+.env.local
+dist/
+build/
+storage/logs/*
+!storage/logs/.gitignore
+backend/storage/app/public/*
+backend/public/storage
+*.log
+.DS_Store
